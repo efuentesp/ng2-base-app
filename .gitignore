@@ -1,5 +1,6 @@
 *.js
 *.js.map
+!systemjs.config.js #Except this file
 
 # Logs
 logs
