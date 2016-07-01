@@ -1,6 +1,6 @@
-grammar com.softtek.codegen.Entity with org.eclipse.xtext.common.Terminals
+grammar com.codebuilder.CodeBuilder with org.eclipse.xtext.common.Terminals
 
-generate entity "http://www.softtek.com/codegen/Entity"
+generate codeBuilder "http://www.codebuilder.com/CodeBuilder"
 
 Model:
 	(entities += Entity)*

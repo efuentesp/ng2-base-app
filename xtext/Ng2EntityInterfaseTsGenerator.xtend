@@ -1,18 +1,18 @@
-package com.softtek.codegen.generator
+package com.codebuilder.generator
 
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess2
 
-import com.softtek.codegen.entity.Model
-import com.softtek.codegen.entity.Entity
-import com.softtek.codegen.entity.EntityTextField
-import com.softtek.codegen.entity.EntityLongTextField
-import com.softtek.codegen.entity.EntityIntegerField
-import com.softtek.codegen.entity.EntityListField
-import com.softtek.codegen.entity.EntityOptionField
-import com.softtek.codegen.entity.EntityCheckboxField
-import com.softtek.codegen.entity.EntityReferenceField
-import com.softtek.codegen.entity.EntityFieldPanelGroup
+import com.codebuilder.codeBuilder.Model
+import com.codebuilder.codeBuilder.Entity
+import com.codebuilder.codeBuilder.EntityTextField
+import com.codebuilder.codeBuilder.EntityLongTextField
+import com.codebuilder.codeBuilder.EntityIntegerField
+import com.codebuilder.codeBuilder.EntityListField
+import com.codebuilder.codeBuilder.EntityOptionField
+import com.codebuilder.codeBuilder.EntityCheckboxField
+import com.codebuilder.codeBuilder.EntityReferenceField
+import com.codebuilder.codeBuilder.EntityFieldPanelGroup
 
 class Ng2EntityInterfaseTsGenerator {
 	

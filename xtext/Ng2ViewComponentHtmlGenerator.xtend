@@ -1,9 +1,9 @@
-package com.softtek.codegen.generator
+package com.codebuilder.generator
 
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import com.softtek.codegen.entity.Model
-import com.softtek.codegen.entity.View
+import com.codebuilder.codeBuilder.Model
+import com.codebuilder.codeBuilder.View
 
 class Ng2ViewComponentHtmlGenerator {
 
