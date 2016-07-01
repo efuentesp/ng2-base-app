@@ -1,0 +1,135 @@
+<!-- Component (Entity): Fideicomiso -->
+<div class="row"> <!-- row -->
+	<div class="col-md-12"> <!-- col-md-12 -->
+		<form [ngFormModel]="form" class="form-horizontal">
+			<div class="row"> <!-- row -->
+				<div class="col-md-12"> <!-- col-md-12 -->
+					<!-- Form Field: Id -->
+					<div class="form-group"> <!-- form-group -->
+						<label for="Id" class="col-md-2 control-label">ID</label>
+						<div class="col-md-10"> <!-- col-md-10 -->
+							<input type="number" id="Id" class="form-control" ngControl="Id">
+						</div> <!-- col-md-10 -->
+					</div> <!-- form-group -->
+					<!-- Panel Group: panel_01 -->
+					<div class="panel panel-default"> <!-- panel -->
+						<div class="panel-heading"> <!-- panel-heading -->
+							<h3 class="panel-title">Panel 1</h3>
+						</div> <!-- panel-heading -->
+						<div class="panel-body"> <!-- panel-body -->
+							<!-- Form Field: numero -->
+							<div class="form-group"> <!-- form-group -->
+								<label for="numero" class="col-md-2 control-label">Número</label>
+								<div class="col-md-10"> <!-- col-md-10 -->
+									<input type="number" id="numero" class="form-control" ngControl="numero">
+								</div> <!-- col-md-10 -->
+							</div> <!-- form-group -->
+							<!-- Form Field: nombre -->
+							<div class="form-group"> <!-- form-group -->
+								<label for="nombre" class="col-md-2 control-label">Nombre</label>
+								<div class="col-md-10"> <!-- col-md-10 -->
+									<input type="text" id="nombre" class="form-control" placeholder="Nombre"  value="Default value text" [(ngModel)]="fideicomiso.nombre" ngControl="nombre" #nombre="ngForm" >
+									<div *ngIf="nombre.dirty && !nombre.valid && !nombre.pending">
+										<div *ngIf="nombre.errors.required" class="alert alert-danger" role="alert">
+											<span class="sr-only">Error:</span>
+											'Required field.'
+										</div>
+									</div>
+								</div> <!-- col-md-10 -->
+							</div> <!-- form-group -->
+						</div> <!-- panel-body -->
+					</div> <!-- panel -->
+					<!-- Panel Group: panel_02 -->
+					<div class="panel panel-default"> <!-- panel -->
+						<div class="panel-heading"> <!-- panel-heading -->
+							<h3 class="panel-title">Panel 2</h3>
+						</div> <!-- panel-heading -->
+						<div class="panel-body"> <!-- panel-body -->
+							<!-- Form Field: patrimonio -->
+							<div class="form-group"> <!-- form-group -->
+								<label for="patrimonio" class="col-md-2 control-label">Patrimonio</label>
+								<div class="col-md-10"> <!-- col-md-10 -->
+									<textarea id="patrimonio" class="form-control" rows="3" ngControl="patrimonio">Default value</textarea>
+									<p class="help-block">This is a help text..</p>
+								</div> <!-- col-md-10 -->
+							</div> <!-- form-group -->
+						</div> <!-- panel-body -->
+					</div> <!-- panel -->
+					<!-- Panel Group: tipo_cliente -->
+					<div class="panel panel-default"> <!-- panel -->
+						<div class="panel-heading"> <!-- panel-heading -->
+							<h3 class="panel-title">Tipo de Cliente</h3>
+						</div> <!-- panel-heading -->
+						<div class="panel-body"> <!-- panel-body -->
+							<!-- Form Field: tipo_persona -->
+							<div class="form-group"> <!-- form-group -->
+								<label for="tipo_persona" class="col-md-2 control-label">Tipo de Persona</label>
+								<div class="col-md-10"> <!-- col-md-10 -->
+									<select class="form-control" id="tipo_persona">
+										<option value="FISICA">Física</option>
+										<option value="MORAL">Moral</option>
+									</select>
+								</div> <!-- col-md-10 -->
+							</div> <!-- form-group -->
+							<!-- Form Field: tipo_cliente -->
+							<div class="form-group"> <!-- form-group -->
+								<label for="tipo_cliente" class="col-md-2 control-label">Tipo de Cliente</label>
+								<div class="col-md-10"> <!-- col-md-10 -->
+									<div class="radio">
+									  <label>
+									    <input type="radio" name="tipo_cliente" id="option_PUBLICO" value="PUBLICO">
+									    Público
+									  </label>
+									</div>
+									<div class="radio">
+									  <label>
+									    <input type="radio" name="tipo_cliente" id="option_PRIVADO" value="PRIVADO">
+									    Privado
+									  </label>
+									</div>
+								</div> <!-- col-md-10 -->
+							</div> <!-- form-group -->
+							<!-- Form Field: tipo_gobierno -->
+							<div class="form-group"> <!-- form-group -->
+								<label for="tipo_gobierno" class="col-md-2 control-label">Tipo de Gobierno</label>
+								<div class="col-md-10"> <!-- col-md-10 -->
+									<div class="checkbox">
+									  <label>
+									    <input type="checkbox" name="tipo_gobierno" value="FEDERAL">
+									    Federal
+									  </label>
+									</div>
+									<div class="checkbox">
+									  <label>
+									    <input type="checkbox" name="tipo_gobierno" value="PARAESTATAL">
+									    Paraestatal
+									  </label>
+									</div>
+									<div class="checkbox">
+									  <label>
+									    <input type="checkbox" name="tipo_gobierno" value="ESTATAL">
+									    Estatal
+									  </label>
+									</div>
+									<div class="checkbox">
+									  <label>
+									    <input type="checkbox" name="tipo_gobierno" value="MUNICIPAL">
+									    Municipal
+									  </label>
+									</div>
+								</div> <!-- col-md-10 -->
+							</div> <!-- form-group -->
+						</div> <!-- panel-body -->
+					</div> <!-- panel -->
+				</div> <!-- col-md-12 -->
+			</div> <!-- row -->
+			<div class="row"> <!-- row -->
+				<div class="col-md-12"> <!-- col-md-12 -->
+					<div class="form-group">
+						<button (click)="editFideicomiso()" [disabled]="!form.valid" class="btn btn-primary" id="fideicomiso_save" [disabled]="!form.valid">Save</button>
+					</div> 
+				</div> <!-- col-md-12 -->
+			</div> <!-- row -->
+		</form>
+	</div> <!-- col-md-12 --> 
+</div> <!-- row -->

@@ -1,0 +1,40 @@
+{
+	"fideicomiso": [
+		{
+			"id": 1,
+			"numero": 10,
+			"nombre": "Fideicomiso 1",
+			"patrimonio": "",
+			"tipo_persona": "Física",
+			"tipo_cliente": "",
+			"tipo_gobierno": ""
+		},
+		{
+			"id": 2,
+			"numero": 20,
+			"nombre": "Fideicomiso 2",
+			"patrimonio": "",
+			"tipo_persona": "Moral",
+			"tipo_cliente": "",
+			"tipo_gobierno": ""
+		},
+		{
+			"id": 3,
+			"numero": 30,
+			"nombre": "Fideicomiso 3",
+			"patrimonio": "",
+			"tipo_persona": "Moral",
+			"tipo_cliente": "",
+			"tipo_gobierno": ""
+		},
+		{
+			"id": 4,
+			"numero": 40,
+			"nombre": "Fideicomiso 4",
+			"patrimonio": "",
+			"tipo_persona": "Física",
+			"tipo_cliente": "",
+			"tipo_gobierno": ""
+		}
+	]
+}
