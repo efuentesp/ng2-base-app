@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
-import { IFideicomiso } from '../fideicomiso/fideicomiso';
+import { IFideicomiso } from '../fideicomiso/fideicomiso.interface';
 import { FideicomisoService } from '../fideicomiso/fideicomiso.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class FideicomisosComponent implements OnInit {
 	ngOnInit() : void {
 		this._fideicomisoService.getAllFideicomiso()
 			.subscribe(
-				fideicomisos => this.fideicomisos = fideicomisos,
+				data => this.fideicomisos = data,
 				error => this.errorMessage = <any>error);
 	}
 }

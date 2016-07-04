@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { ISubfiso } from './subfiso';
+import { ISubfiso } from './subfiso.interface';
 
 @Injectable()
 export class SubfisoService {

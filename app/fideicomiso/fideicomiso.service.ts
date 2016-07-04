@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { IFideicomiso } from './fideicomiso';
+import { IFideicomiso } from './fideicomiso.interface';
 
 @Injectable()
 export class FideicomisoService {
@@ -21,9 +21,7 @@ export class FideicomisoService {
 	}
 
 	getFideicomiso(id: number): Observable<IFideicomiso> {
-		let editUrl = this._fideicomisoUrl + '/' + id;
-		console.log(editUrl);
-		return this._http.get(editUrl)
+		return this._http.get(this._fideicomisoUrl + '/' + id)
 			.map((response: Response) => <IFideicomiso>response.json())
 			.do(data => console.log('All: ' + JSON.stringify(data)))
 			.catch(this.handleError);

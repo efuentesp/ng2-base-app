@@ -1,21 +1,16 @@
-import { Component } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
-import {
-	Control,
-	ControlGroup,
-	FormBuilder,
-	Validators,
-	FORM_DIRECTIVES
-} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteParams } from '@angular/router-deprecated';
+import { Control, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES } from '@angular/common';
 
-//import { ISubfiso } from './subfiso';
+import { ISubfiso } from './subfiso.interface';
+import { ISubfiso } from './subfiso.class';
 import { SubfisoService } from './subfiso.service';
 
 @Component({
 	templateUrl: 'app/subfiso/add-subfiso.component.html',
 	directives: [FORM_DIRECTIVES]
 })
-export class AddSubfisoComponent {
+export class AddSubfisoComponent implements OnInit {
 
 	form: ControlGroup;
 	
@@ -23,40 +18,22 @@ export class AddSubfisoComponent {
 	numero: Control;
 	nombre: Control;
 
-	public model: any = {};
+	private id;
+	public errorMessage: string;			
+	public subfiso;
 
-	constructor(private _builder: FormBuilder,
-				private _router: Router,
+	constructor(private builder: FormBuilder,
+				private router: Router,
+				private params: RouteParams,
 				private _subfisoService: SubfisoService) {
 		
-		this.Id = new Control(
-			"",
-			Validators.compose([
-			])
-		);
-		this.numero = new Control(
-			"",
-			Validators.compose([
-				Validators.required,
-			])
-		);
-		this.nombre = new Control(
-			"",
-			Validators.compose([
-				Validators.required,
-			])
-		);
-		
-		this.form = _builder.group({
-			Id: this.Id,
-			numero: this.numero,
-			nombre: this.nombre,
-		});
+		this.id = params.get('id');
 	}
 	
-	addSubfiso() {
-		this._subfisoService.addSubfiso(this.model);
-		this.model = {};
+	doOnSubmit(event) {
+		this._subfisoService.addSubfiso(this.form.value);
 		//this._router.navigateByUrl('/subfiso');
+		event.preventDefault();
 	}
+	
 }
