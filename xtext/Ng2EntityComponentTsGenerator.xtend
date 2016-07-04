@@ -32,152 +32,198 @@ class Ng2EntityComponentTsGenerator {
 	}
 
 	def CharSequence createEntityComponentTs(Entity entity, String action) '''
-		import { Component } from '@angular/core';
+		import { Component, OnInit } from '@angular/core';
 		import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteParams } from '@angular/router-deprecated';
 		import { Control, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES } from '@angular/common';
 		
-		//import { IÂ«entity.name.toFirstUpperÂ» } from './Â«entity.name.toFirstLowerÂ»';
-		import { Â«entity.name.toFirstUpperÂ»Service } from './Â«entity.name.toFirstLowerÂ».service';
+		import { I«entity.name.toFirstUpper» } from './«entity.name.toFirstLower».interface';
+		import { «entity.name.toFirstUpper» } from './«entity.name.toFirstLower».class';
+		import { «entity.name.toFirstUpper»Service } from './«entity.name.toFirstLower».service';
 		
 		@Component({
-			templateUrl: 'app/Â«entity.name.toFirstLowerÂ»/Â«actionÂ»-Â«entity.name.toFirstLowerÂ».component.html',
+			templateUrl: 'app/«entity.name.toFirstLower»/«action»-«entity.name.toFirstLower».component.html',
 			directives: [FORM_DIRECTIVES]
 		})
-		export class Â«action.toFirstUpperÂ»Â«entity.name.toFirstUpperÂ»Component {
+		export class «action.toFirstUpper»«entity.name.toFirstUpper»Component implements OnInit {
 
 			form: ControlGroup;
 			
-			Â«FOR f : entity.entity_fieldsÂ»
-				Â«f.createNg2ComponentControlDefinitionÂ»
-			Â«ENDFORÂ»
+			«FOR f : entity.entity_fields»
+				«f.createNg2ComponentControlDefinition»
+			«ENDFOR»
 
-			//public model: any = {};
-			private id;
+			private _id;
 			public errorMessage: string;			
-			public Â«entity.name.toFirstLowerÂ»;
+			public «entity.name.toFirstLower»;
 
 			constructor(private builder: FormBuilder,
 						private router: Router,
 						private params: RouteParams,
-						private _Â«entity.name.toFirstLowerÂ»Service: Â«entity.name.toFirstUpperÂ»Service) {
+						private _«entity.name.toFirstLower»Service: «entity.name.toFirstUpper»Service) {
 				
-				this.id = params.get('id');
-				
-				Â«FOR f : entity.entity_fieldsÂ»
-					Â«f.createNg2ComponentControlItemÂ»
-				Â«ENDFORÂ»
-				
-				this.form = builder.group({
-					Â«FOR f : entity.entity_fieldsÂ»
-						Â«f.createNg2ComponentControlGroupItemÂ»
-					Â«ENDFORÂ»
-				});
+				this._id = params.get('id');
 			}
 			
-			Â«IF action=='add'Â»
-				addÂ«entity.name.toFirstUpperÂ»() {
-					this._Â«entity.name.toFirstLowerÂ»Service.addÂ«entity.name.toFirstUpperÂ»(this.model);
-					//this.model = {};
-					//this._router.navigateByUrl('/Â«entity.name.toFirstLowerÂ»');
-				}
-			Â«ENDIFÂ»
-			
-			Â«IF action=='edit'Â»
-				this._Â«entity.name.toFirstLowerÂ»Service.getÂ«entity.name.toFirstUpperÂ»(this.id)
-					.subscribe(
-						data => this.Â«entity.name.toFirstLowerÂ» = data,
-						error => this.errorMessage = <any>error);
-			Â«ENDIFÂ»
+			doOnSubmit(event) {
+				«IF action=='add'»
+					this._«entity.name.toFirstLower»Service.addItem(this.form.value);
+				«ENDIF»
+				«IF action=='edit'»
+					this._«entity.name.toFirstLower»Service.updateItem(this.form.value);
+				«ENDIF»
+				//this._router.navigateByUrl('/«entity.name.toFirstLower»');
+				event.preventDefault();
+			}
+
+			ngOnInit() : void {
+				«IF action=='edit'»
+					this._«entity.name.toFirstLower»Service.get«entity.name.toFirstUpper»(this._id)
+						.subscribe(
+							data => {
+								this.«entity.name.toFirstLower» = <I«entity.name.toFirstUpper»>data;
+								«FOR f : entity.entity_fields»
+									«f.createNg2ComponentControlItemUpdate(entity)»
+								«ENDFOR»								
+							},
+							error => this.errorMessage = <any>error,
+							//() => console.log(this.«entity.name.toFirstLower»)
+						);
+				«ENDIF»
+							
+				«FOR f : entity.entity_fields»
+					«f.createNg2ComponentControlItem»
+				«ENDFOR»
+				
+				this.form = this.builder.group({
+					«FOR f : entity.entity_fields»
+						«f.createNg2ComponentControlGroupItem»
+					«ENDFOR»
+				});
+			}
 		}
 	'''
+	
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityTextField f, Entity e) '''
+		this.«f.name».updateValue(this.«e.name.toFirstLower».«f.name»);
+	'''
 
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityLongTextField f, Entity e) '''
+		this.«f.name».updateValue(this.«e.name.toFirstLower».«f.name»);
+	'''
+	
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityIntegerField f, Entity e) '''
+		this.«f.name».updateValue(this.«e.name.toFirstLower».«f.name»);
+	'''
+
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityListField f, Entity e) '''
+		this.«f.name».updateValue(this.«e.name.toFirstLower».«f.name»);
+	'''
+	
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityOptionField f, Entity e) '''
+		this.«f.name».updateValue(this.«e.name.toFirstLower».«f.name»);
+	'''
+
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityCheckboxField f, Entity e) '''
+		this.«f.name».updateValue(this.«e.name.toFirstLower».«f.name»);
+	'''
+	
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityReferenceField f, Entity e) '''
+	'''
+
+	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityFieldPanelGroup g, Entity e) '''
+		«FOR f : g.entity_fields»
+			«f.createNg2ComponentControlItemUpdate(e)»
+		«ENDFOR»	
+	'''	
+	
+		
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityTextField f) '''
-		Â«f.nameÂ»: Control;
+		«f.name»: Control;
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityLongTextField f) '''
-		Â«f.nameÂ»: Control;
+		«f.name»: Control;
 	'''	
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityIntegerField f) '''
-		Â«f.nameÂ»: Control;
+		«f.name»: Control;
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityListField f) '''
-		Â«f.nameÂ»: Control;
+		«f.name»: Control;
 	'''		
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityOptionField f) '''
-		Â«f.nameÂ»: Control;
+		«f.name»: Control;
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityCheckboxField f) '''
-		Â«f.nameÂ»: Control;
+		«f.name»: Control;
 	'''	
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityReferenceField f) '''
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityFieldPanelGroup g) '''
-		Â«FOR f : g.entity_fieldsÂ»
-			Â«f.createNg2ComponentControlDefinitionÂ»
-		Â«ENDFORÂ»
+		«FOR f : g.entity_fields»
+			«f.createNg2ComponentControlDefinition»
+		«ENDFOR»
 	'''
 	
 	
 		
 	def dispatch CharSequence createNg2ComponentControlItem(EntityTextField f) '''
-		this.Â«f.nameÂ» = new Control(
-			"",
+		this.«f.name» = new Control(
+			'',
 			Validators.compose([
-				Â«f.requiredValidatorÂ»
-				Â«f.maxLenghtValidatorÂ»
+				«f.requiredValidator»
+				«f.maxLenghtValidator»
 			])
 		);
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityLongTextField f) '''
-		this.Â«f.nameÂ» = new Control(
-			"",
+		this.«f.name» = new Control(
+			'',
 			Validators.compose([
-				Â«f.requiredValidatorÂ»
+				«f.requiredValidator»
 			])
 		);
 	'''	
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityIntegerField f) '''
-		this.Â«f.nameÂ» = new Control(
-			"",
+		this.«f.name» = new Control(
+			'',
 			Validators.compose([
-				Â«f.requiredValidatorÂ»
+				«f.requiredValidator»
 			])
 		);
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityListField f) '''
-		this.Â«f.nameÂ» = new Control(
-			"",
+		this.«f.name» = new Control(
+			'',
 			Validators.compose([
-				Â«f.requiredValidatorÂ»
+				«f.requiredValidator»
 			])
 		);
 	'''	
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityOptionField f) '''
-		this.Â«f.nameÂ» = new Control(
-			"",
+		this.«f.name» = new Control(
+			'',
 			Validators.compose([
-				Â«f.requiredValidatorÂ»
+				«f.requiredValidator»
 			])
 		);
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityCheckboxField f) '''
-		this.Â«f.nameÂ» = new Control(
-			"",
+		this.«f.name» = new Control(
+			'',
 			Validators.compose([
-				Â«f.requiredValidatorÂ»
+				«f.requiredValidator»
 			])
 		);
 	'''	
@@ -186,48 +232,48 @@ class Ng2EntityComponentTsGenerator {
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityFieldPanelGroup g) '''
-		Â«FOR f : g.entity_fieldsÂ»
-			Â«f.createNg2ComponentControlItemÂ»
-		Â«ENDFORÂ»
+		«FOR f : g.entity_fields»
+			«f.createNg2ComponentControlItem»
+		«ENDFOR»
 	'''	
 	
 	
 		
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityTextField f) '''
-		Â«f.nameÂ»: this.Â«f.nameÂ»,
+		«f.name»: this.«f.name»,
 	'''
 	
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityLongTextField f) '''
-		Â«f.nameÂ»: this.Â«f.nameÂ»,
+		«f.name»: this.«f.name»,
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityIntegerField f) '''
-		Â«f.nameÂ»: this.Â«f.nameÂ»,
+		«f.name»: this.«f.name»,
 	'''
 	
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityListField f) '''
-		Â«f.nameÂ»: this.Â«f.nameÂ»,
+		«f.name»: this.«f.name»,
 	'''
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityOptionField f) '''
-		Â«f.nameÂ»: this.Â«f.nameÂ»,
+		«f.name»: this.«f.name»,
 	'''
 	
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityCheckboxField f) '''
-		Â«f.nameÂ»: this.Â«f.nameÂ»,
+		«f.name»: this.«f.name»,
 	'''
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityReferenceField f) '''
 	'''
 	
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityFieldPanelGroup g) '''
-		Â«FOR f : g.entity_fieldsÂ»
-			Â«f.createNg2ComponentControlGroupItemÂ»
-		Â«ENDFORÂ»
+		«FOR f : g.entity_fields»
+			«f.createNg2ComponentControlGroupItem»
+		«ENDFOR»
 	'''
 
 	def dispatch CharSequence maxLenghtValidator(EntityTextField f) '''
-		Â«IF f.max_length != nullÂ»
-			Validators.maxLength(Â«f.max_length.valueÂ»),
-		Â«ENDIFÂ»		
+		«IF f.max_length != null»
+			Validators.maxLength(«f.max_length.value»),
+		«ENDIF»		
 	'''
 
 	def dispatch CharSequence maxLenghtValidator(EntityLongTextField f) '''
@@ -249,56 +295,56 @@ class Ng2EntityComponentTsGenerator {
 	'''
 	
 	def dispatch CharSequence maxLenghtValidator(EntityFieldPanelGroup g) '''
-		Â«FOR f : g.entity_fieldsÂ»
-			Â«f.maxLenghtValidatorÂ»
-		Â«ENDFORÂ»	
+		«FOR f : g.entity_fields»
+			«f.maxLenghtValidator»
+		«ENDFOR»	
 	'''
 	
 	
 	
 	def dispatch CharSequence requiredValidator(EntityTextField f) '''
-		Â«IF f.required != nullÂ»
+		«IF f.required != null»
 			Validators.required,
-		Â«ENDIFÂ»	
+		«ENDIF»	
 	'''
 
 	def dispatch CharSequence requiredValidator(EntityLongTextField f) '''
-		Â«IF f.required != nullÂ»
+		«IF f.required != null»
 			Validators.required,
-		Â«ENDIFÂ»	
+		«ENDIF»	
 	'''
 	
 	def dispatch CharSequence requiredValidator(EntityIntegerField f) '''
-		Â«IF f.required != nullÂ»
+		«IF f.required != null»
 			Validators.required,
-		Â«ENDIFÂ»	
+		«ENDIF»	
 	'''
 
 	def dispatch CharSequence requiredValidator(EntityListField f) '''
-		Â«IF f.required != nullÂ»
+		«IF f.required != null»
 			Validators.required,
-		Â«ENDIFÂ»	
+		«ENDIF»	
 	'''
 	
 	def dispatch CharSequence requiredValidator(EntityOptionField f) '''
-		Â«IF f.required != nullÂ»
+		«IF f.required != null»
 			Validators.required,
-		Â«ENDIFÂ»	
+		«ENDIF»	
 	'''
 
 	def dispatch CharSequence requiredValidator(EntityCheckboxField f) '''
-		Â«IF f.required != nullÂ»
+		«IF f.required != null»
 			Validators.required,
-		Â«ENDIFÂ»	
+		«ENDIF»	
 	'''
 	
 	def dispatch CharSequence requiredValidator(EntityReferenceField f) '''
 	'''
 	
 	def dispatch CharSequence requiredValidator(EntityFieldPanelGroup g) '''
-		Â«FOR f : g.entity_fieldsÂ»
-			Â«f.requiredValidatorÂ»
-		Â«ENDFORÂ»	
+		«FOR f : g.entity_fields»
+			«f.requiredValidator»
+		«ENDFOR»	
 	'''
 
 	

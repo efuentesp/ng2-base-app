@@ -20,8 +20,8 @@ class CodeBuilderGenerator extends AbstractGenerator {
 	@Inject Ng2EntityComponentHtmlGenerator ng2EntityComponentHtmlGenerator
 	@Inject Ng2EntityServiceTsGenerator ng2EntityServiceTsGenerator
 	
-	@Inject Ng2EntityInterfaseTsGenerator ng2EntityInterfaseTsGenerator
-	//@Inject Ng2EntityClassTsGenerator ng2EntityClassTsGenerator
+	@Inject Ng2EntityInterfaceTsGenerator ng2EntityInterfaceTsGenerator
+	@Inject Ng2EntityClassTsGenerator ng2EntityClassTsGenerator
 	
 	@Inject Ng2ViewComponentTsGenerator ng2ViewComponentTsGenerator
 	@Inject Ng2ViewComponentHtmlGenerator ng2ViewComponentHtmlGenerator
@@ -31,8 +31,8 @@ class CodeBuilderGenerator extends AbstractGenerator {
 		ng2EntityComponentHtmlGenerator.doGenerator(resource, fsa)
 		ng2EntityServiceTsGenerator.doGenerator(resource, fsa)
 		
-		ng2EntityInterfaseTsGenerator.doGenerator(resource, fsa)
-		//ng2EntityClassTsGenerator.doGenerator(resource, fsa)
+		ng2EntityInterfaceTsGenerator.doGenerator(resource, fsa)
+		ng2EntityClassTsGenerator.doGenerator(resource, fsa)
 		
 		ng2ViewComponentTsGenerator.doGenerator(resource, fsa)
 		ng2ViewComponentHtmlGenerator.doGenerator(resource, fsa)

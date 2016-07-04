@@ -23,23 +23,23 @@ class Ng2ViewComponentTsGenerator {
 		import { Component, OnInit } from '@angular/core';
 		import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 		
-		import { IÂ«view.base_entity.name.toFirstUpperÂ» } from '../Â«view.base_entity.name.toFirstLowerÂ»/Â«view.base_entity.name.toFirstLowerÂ»';
-		import { Â«view.base_entity.name.toFirstUpperÂ»Service } from '../Â«view.base_entity.name.toFirstLowerÂ»/Â«view.base_entity.name.toFirstLowerÂ».service';
+		import { I«view.base_entity.name.toFirstUpper» } from '../«view.base_entity.name.toFirstLower»/«view.base_entity.name.toFirstLower».interface';
+		import { «view.base_entity.name.toFirstUpper»Service } from '../«view.base_entity.name.toFirstLower»/«view.base_entity.name.toFirstLower».service';
 		
 		@Component({
-			templateUrl: 'app/Â«view.name.toFirstLowerÂ»/Â«view.name.toFirstLowerÂ».component.html',
+			templateUrl: 'app/«view.name.toFirstLower»/«view.name.toFirstLower».component.html',
 			directives: [ROUTER_DIRECTIVES]
 		})
-		export class Â«view.name.toFirstUpperÂ»Component implements OnInit {
+		export class «view.name.toFirstUpper»Component implements OnInit {
 			errorMessage: string;
-			Â«view.name.toFirstLowerÂ» : IÂ«view.base_entity.name.toFirstUpperÂ»[];
+			«view.name.toFirstLower» : I«view.base_entity.name.toFirstUpper»[];
 			
-			constructor(private _Â«view.base_entity.name.toFirstLowerÂ»Service: Â«view.base_entity.name.toFirstUpperÂ»Service) {}
+			constructor(private _«view.base_entity.name.toFirstLower»Service: «view.base_entity.name.toFirstUpper»Service) {}
 			
 			ngOnInit() : void {
-				this._Â«view.base_entity.name.toFirstLowerÂ»Service.getAllÂ«view.base_entity.name.toFirstUpperÂ»()
+				this._«view.base_entity.name.toFirstLower»Service.getAll«view.base_entity.name.toFirstUpper»()
 					.subscribe(
-						data => this.Â«view.name.toFirstLowerÂ» = data,
+						data => this.«view.name.toFirstLower» = data,
 						error => this.errorMessage = <any>error);
 			}
 		}

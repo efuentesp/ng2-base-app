@@ -20,38 +20,45 @@ class Ng2EntityServiceTsGenerator {
 	
 	def CharSequence createNg2EntityServiceTs(Entity entity) '''
 		import { Injectable } from '@angular/core';
-		import { Http, Response } from '@angular/http';
+		import { Http, Response, Headers } from '@angular/http';
 		import { Observable } from 'rxjs/Observable';
 		
-		import { IÂ«entity.name.toFirstUpperÂ» } from './Â«entity.name.toFirstLowerÂ»';
+		import { I«entity.name.toFirstUpper» } from './«entity.name.toFirstLower».interface';
 
 		@Injectable()
-		export class Â«entity.name.toFirstUpperÂ»Service {
+		export class «entity.name.toFirstUpper»Service {
 			
-			private _Â«entity.name.toFirstLowerÂ»Url;
+			private _«entity.name.toFirstLower»Url;
+			private _headers = new Headers();
 			
 			constructor(private _http: Http) {
-				this._Â«entity.name.toFirstLowerÂ»Url = 'http://localhost:3001/Â«entity.name.toFirstLowerÂ»';
+				this._«entity.name.toFirstLower»Url = 'http://localhost:3001/«entity.name.toFirstLower»';
+				this._headers.append('Content-Type', 'application/json');
 			}
 			
-			getAllÂ«entity.name.toFirstUpperÂ»() : Observable<IÂ«entity.name.toFirstUpperÂ»[]> {
-				return this._http.get(this._Â«entity.name.toFirstLowerÂ»Url)
-					.map((response: Response) => <IÂ«entity.name.toFirstUpperÂ»[]>response.json())
-					.do(data => console.log('All: ' + JSON.stringify(data)))
+			getAll«entity.name.toFirstUpper»() : Observable<I«entity.name.toFirstUpper»[]> {
+				return this._http.get(this._«entity.name.toFirstLower»Url)
+					.map((response: Response) => <I«entity.name.toFirstUpper»[]>response.json())
+					//.do(data => console.log('All: ' + JSON.stringify(data)))
 					.catch(this.handleError);
 			}
 
-			getÂ«entity.name.toFirstUpperÂ»(id: number): Observable<IÂ«entity.name.toFirstUpperÂ»> {
-				return this._http.get(this._Â«entity.name.toFirstLowerÂ»Url + '/' + id)
-					.map((response: Response) => <IÂ«entity.name.toFirstUpperÂ»>response.json())
-					.do(data => console.log('All: ' + JSON.stringify(data)))
-					.catch(this.handleError);
-									
-				//return this.getAllÂ«entity.name.toFirstUpperÂ»()
-				//	.map((Â«entity.name.toFirstLowerÂ»List: IÂ«entity.name.toFirstUpperÂ»[]) => Â«entity.name.toFirstLowerÂ»List.find(i => i.Â«entity.entity_db_table.id_db_tableÂ» === Â«entity.entity_db_table.id_db_tableÂ»));
+			get«entity.name.toFirstUpper»(id: number): Observable<I«entity.name.toFirstUpper»> {
+				return this._http.get(this._«entity.name.toFirstLower»Url + '/' + id)
+					.map((response: Response) => <I«entity.name.toFirstUpper»>response.json())
+					//.do(data => console.log('All: ' + JSON.stringify(data)))
+					.catch(this.handleError);									
 			}
 
-			addÂ«entity.name.toFirstUpperÂ»(model): void {
+			addItem(item): void {
+				return;
+			}
+
+			updateItem(item): void {
+				console.log(item);
+				this._http.put(this._fideicomisoUrl + '/' + item.id, JSON.stringify(item), { headers: this._headers })
+					.map((res: Response) => res.json()
+					.subscribe((res: IFideicomiso) => this.putResponse = res);
 				return;
 			}
 

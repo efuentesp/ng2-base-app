@@ -32,21 +32,28 @@ class Ng2EntityComponentHtmlGenerator {
 	}
 
 	def CharSequence createNg2EntityComponentHtml(Entity entity, String action) '''
-		<!-- Component (Entity): Â«entity.nameÂ» -->
+		<!-- Component (Entity): «entity.name» -->
 		<div class="row"> <!-- row -->
 			<div class="col-md-12"> <!-- col-md-12 -->
-				<form [ngFormModel]="form" class="form-horizontal">
+				<form	[ngFormModel]="form"
+						class="form-horizontal"
+						(submit)="doOnSubmit($event)">
 					<div class="row"> <!-- row -->
 						<div class="col-md-12"> <!-- col-md-12 -->
-							Â«FOR entity_field : entity.entity_fieldsÂ»
-								Â«entity_field.createHtmlFormFieldÂ»
-							Â«ENDFORÂ»
+							«FOR entity_field : entity.entity_fields»
+								«entity_field.createHtmlFormField»
+							«ENDFOR»
 						</div> <!-- col-md-12 -->
 					</div> <!-- row -->
 					<div class="row"> <!-- row -->
 						<div class="col-md-12"> <!-- col-md-12 -->
 							<div class="form-group">
-								<button (click)="Â«actionÂ»Â«entity.name.toFirstUpperÂ»()" [disabled]="!form.valid" class="btn btn-primary" id="Â«entity.name.toFirstLowerÂ»_save" [disabled]="!form.valid">Save</button>
+								<button type="submit"
+										[disabled]="!form.valid"
+										class="btn btn-primary"
+										id="«entity.name.toFirstLower»_save">
+											Save
+								</button>
 							</div> 
 						</div> <!-- col-md-12 -->
 					</div> <!-- row -->
@@ -57,116 +64,131 @@ class Ng2EntityComponentHtmlGenerator {
 
 	def dispatch CharSequence createHtmlFormField(EntityTextField f) 
 		'''
-		<!-- Form Field: Â«f.nameÂ» -->
+		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
-			<label for="Â«f.nameÂ»" class="col-md-2 control-label">Â«f.label.valueÂ»</label>
+			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
 			<div class="col-md-10"> <!-- col-md-10 -->
-				<input type="text" id="Â«f.nameÂ»" class="form-control" placeholder="Â«f.label.valueÂ»" Â«IF f.default_value != nullÂ» value="Â«f.default_value.valueÂ»"Â«ENDIFÂ» [(ngModel)]="model.Â«f.nameÂ»" ngControl="Â«f.nameÂ»" #Â«f.nameÂ»="ngForm" >
-				<div *ngIf="Â«f.nameÂ».dirty && !Â«f.nameÂ».valid && !Â«f.nameÂ».pending">
-					Â«IF f.required != nullÂ»
-						<div *ngIf="Â«f.nameÂ».errors.required" class="alert alert-danger" role="alert">
+				<input	type="text"
+						id="«f.name»"
+						class="form-control"
+						placeholder="«f.label.value»"
+						ngControl="«f.name»"
+						#«f.name»="ngForm" >
+				<div *ngIf="«f.name».dirty && !«f.name».valid && !«f.name».pending">
+					«IF f.required != null»
+						<div *ngIf="«f.name».errors.required" class="alert alert-danger" role="alert">
 							<span class="sr-only">Error:</span>
 							'Required field.'
 						</div>
-					Â«ENDIFÂ»
-					Â«IF f.max_length != nullÂ»
-						<div *ngIf="Â«f.nameÂ».errors.maxLength" class="alert alert-danger" role="alert">
+					«ENDIF»
+					«IF f.max_length != null»
+						<div *ngIf="«f.name».errors.maxLength" class="alert alert-danger" role="alert">
 							<span class="sr-only">Error:</span>
-							'Max Length is Â«f.max_length.valueÂ» characters.'
+							'Max Length is «f.max_length.value» characters.'
 						</div>
-					Â«ENDIFÂ»
+					«ENDIF»
 				</div>
-				Â«IF f.help_text != nullÂ»
-				<p class="help-block">Â«f.help_text.valueÂ»</p>
-				Â«ENDIFÂ»					
+				«IF f.help_text != null»
+					<p class="help-block">«f.help_text.value»</p>
+				«ENDIF»					
 			</div> <!-- col-md-10 -->
 		</div> <!-- form-group -->
 		'''
 
 	def dispatch CharSequence createHtmlFormField(EntityLongTextField f) 
 		'''
-		<!-- Form Field: Â«f.nameÂ» -->
+		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
-			<label for="Â«f.nameÂ»" class="col-md-2 control-label">Â«f.label.valueÂ»</label>
+			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
 			<div class="col-md-10"> <!-- col-md-10 -->
-				<textarea id="Â«f.nameÂ»" class="form-control" rows="Â«IF f.rows != nullÂ»Â«f.rows.valueÂ»Â«ELSEÂ»5Â«ENDIFÂ»" ngControl="Â«f.nameÂ»">Â«IF f.default_value != nullÂ»Â«f.default_value.valueÂ»Â«ENDIFÂ»</textarea>
-				Â«IF f.help_text != nullÂ»
-				<p class="help-block">Â«f.help_text.valueÂ»</p>
-				Â«ENDIFÂ»					
+				<textarea	id="«f.name»"
+							class="form-control"
+							rows="«IF f.rows != null»«f.rows.value»«ELSE»5«ENDIF»"
+							ngControl="«f.name»"
+							#«f.name»="ngForm">
+				</textarea>
+				«IF f.help_text != null»
+					<p class="help-block">«f.help_text.value»</p>
+				«ENDIF»					
 			</div> <!-- col-md-10 -->
 		</div> <!-- form-group -->
 		'''
 
 	def dispatch CharSequence createHtmlFormField(EntityIntegerField f) 
 		'''
-		<!-- Form Field: Â«f.nameÂ» -->
+		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
-			<label for="Â«f.nameÂ»" class="col-md-2 control-label">Â«f.label.valueÂ»</label>
+			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
 			<div class="col-md-10"> <!-- col-md-10 -->
-				<input type="number" id="Â«f.nameÂ»" class="form-control" ngControl="Â«f.nameÂ»">
-				Â«IF f.help_text != nullÂ»
-				<p class="help-block">Â«f.help_text.valueÂ»</p>
-				Â«ENDIFÂ»					
+				<input	type="number"
+						id="«f.name»"
+						class="form-control"
+						ngControl="«f.name»"
+						#«f.name»="ngForm">
+				«IF f.help_text != null»
+					<p class="help-block">«f.help_text.value»</p>
+				«ENDIF»					
 			</div> <!-- col-md-10 -->
 		</div> <!-- form-group -->
 		'''
 
 	def dispatch CharSequence createHtmlFormField(EntityListField f) 
 		'''
-		<!-- Form Field: Â«f.nameÂ» -->
+		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
-			<label for="Â«f.nameÂ»" class="col-md-2 control-label">Â«f.label.valueÂ»</label>
+			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
 			<div class="col-md-10"> <!-- col-md-10 -->
-				<select class="form-control" id="Â«f.nameÂ»">
-					Â«FOR v : f.valuesÂ»
-						<option value="Â«v.keyÂ»">Â«v.labelÂ»</option>
-					Â«ENDFORÂ»
+				<select class="form-control" id="«f.name»">
+					<option value="">-- Select one --</option>
+					«FOR v : f.values»
+						<option value="«v.key»">«v.label»</option>
+					«ENDFOR»
 				</select>
-				Â«IF f.help_text != nullÂ»
-				<p class="help-block">Â«f.help_text.valueÂ»</p>
-				Â«ENDIFÂ»					
+				«IF f.help_text != null»
+					<p class="help-block">«f.help_text.value»</p>
+				«ENDIF»					
 			</div> <!-- col-md-10 -->
 		</div> <!-- form-group -->
 		'''
 
 	def dispatch CharSequence createHtmlFormField(EntityOptionField f) 
 		'''
-		<!-- Form Field: Â«f.nameÂ» -->
+		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
-			<label for="Â«f.name.toFirstLowerÂ»" class="col-md-2 control-label">Â«f.label.valueÂ»</label>
+			<label for="«f.name.toFirstLower»" class="col-md-2 control-label">«f.label.value»</label>
 			<div class="col-md-10"> <!-- col-md-10 -->
-				Â«FOR v : f.valuesÂ»
+				«FOR v : f.values»
 					<div class="radio">
 					  <label>
-					    <input type="radio" name="Â«f.name.toFirstLowerÂ»" id="option_Â«v.keyÂ»" value="Â«v.keyÂ»">
-					    Â«v.labelÂ»
+					    <input type="radio" name="«f.name.toFirstLower»" id="option_«v.key»" value="«v.key»">
+					    «v.label»
 					  </label>
 					</div>
-				Â«ENDFORÂ»
-				Â«IF f.help_text != nullÂ»
-				<p class="help-block">Â«f.help_text.valueÂ»</p>
-				Â«ENDIFÂ»					
+				«ENDFOR»
+				«IF f.help_text != null»
+					<p class="help-block">«f.help_text.value»</p>
+				«ENDIF»					
 			</div> <!-- col-md-10 -->
 		</div> <!-- form-group -->
 		'''
 
 	def dispatch CharSequence createHtmlFormField(EntityCheckboxField f) 
 		'''
-		<!-- Form Field: Â«f.nameÂ» -->
+		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
-			<label for="Â«f.name.toFirstLowerÂ»" class="col-md-2 control-label">Â«f.label.valueÂ»</label>
+			<label for="«f.name.toFirstLower»" class="col-md-2 control-label">«f.label.value»</label>
 			<div class="col-md-10"> <!-- col-md-10 -->
-				Â«FOR v : f.valuesÂ»
+				«FOR v : f.values»
 					<div class="checkbox">
 					  <label>
-					    <input type="checkbox" name="Â«f.name.toFirstLowerÂ»" value="Â«v.keyÂ»">
-					    Â«v.labelÂ»
+					    <input type="checkbox" name="«f.name.toFirstLower»" value="«v.key»">
+					    «v.label»
 					  </label>
 					</div>
-				Â«ENDFORÂ»
-				Â«IF f.help_text != nullÂ»
-				<p class="help-block">Â«f.help_text.valueÂ»</p>
-				Â«ENDIFÂ»					
+				«ENDFOR»
+				«IF f.help_text != null»
+					<p class="help-block">«f.help_text.value»</p>
+				«ENDIF»					
 			</div> <!-- col-md-10 -->
 		</div> <!-- form-group -->
 		'''
@@ -176,15 +198,15 @@ class Ng2EntityComponentHtmlGenerator {
 		'''
 
 	def dispatch CharSequence createHtmlFormField(EntityFieldPanelGroup g) '''
-		<!-- Panel Group: Â«g.nameÂ» -->
+		<!-- Panel Group: «g.name» -->
 		<div class="panel panel-default"> <!-- panel -->
 			<div class="panel-heading"> <!-- panel-heading -->
-				<h3 class="panel-title">Â«g.label.valueÂ»</h3>
+				<h3 class="panel-title">«g.label.value»</h3>
 			</div> <!-- panel-heading -->
 			<div class="panel-body"> <!-- panel-body -->
-				Â«FOR entity_field : g.entity_fieldsÂ»
-					Â«entity_field.createHtmlFormFieldÂ»
-				Â«ENDFORÂ»
+				«FOR entity_field : g.entity_fields»
+					«entity_field.createHtmlFormField»
+				«ENDFOR»
 			</div> <!-- panel-body -->
 		</div> <!-- panel -->
 	'''

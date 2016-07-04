@@ -23,8 +23,8 @@ EntityTitle:
 
 EntityDbTable:
 	'db_table' '{'
-		'name' entity_db_table=STRING
-		'id' id_db_table=STRING
+		('name' entity_db_table=STRING)?
+		'id' id_db_table=ID
 	'}'
 ;
 

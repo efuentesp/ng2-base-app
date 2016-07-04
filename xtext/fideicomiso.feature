@@ -2,7 +2,7 @@ entity Fideicomiso {
 	title "Fideicomiso"
 	db_table {
 		name "CONTRATO"
-		id "id"
+		id Id
 	}
 	fields {
 		Integer Id {
@@ -13,7 +13,7 @@ entity Fideicomiso {
 			label "Panel 1"
 			fields {
 				Integer numero {
-					label "NÃºmero"
+					label "Número"
 					db_field "CTO_NUM_CONTRATO"
 					required
 					cardinality 1
@@ -47,14 +47,14 @@ entity Fideicomiso {
 				List tipo_persona {
 					label "Tipo de Persona"
 					values {
-						FISICA	| "FÃ­sica"
+						FISICA	| "Física"
 						MORAL	| "Moral"
 					}
 				}
 				Option tipo_cliente {
 					label "Tipo de Cliente"
 					values {
-						PUBLICO	| "PÃºblico"
+						PUBLICO	| "Público"
 						PRIVADO	| "Privado"
 					}
 				}
@@ -76,7 +76,7 @@ entity Subfiso {
     title "Sub Fiso"
     db_table {
     	name "SUBCONT"
-    	id "id"
+    	id Id
     } 
     fields {
 		Integer Id {
@@ -92,7 +92,7 @@ entity Subfiso {
         }
         
         Integer numero {
-            label "NÃºmero"
+            label "Número"
             db_field "SCT_SUB_CONTRATO"
             required
             cardinality 1
@@ -111,7 +111,7 @@ view Fideicomisos {
 	base_entity Fideicomiso
 	fields {
 		numero {
-			label "NÃºmero"
+			label "Número"
 		}
 		nombre {
 			label "Nombre"
@@ -126,7 +126,7 @@ view Fideicomisos {
 	}
 	exposed_filter_criterias {
 		numero {
-			label "NÃºmero"
+			label "Número"
 		}		
 	}
 }

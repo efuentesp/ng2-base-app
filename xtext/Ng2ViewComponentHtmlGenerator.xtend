@@ -19,8 +19,8 @@ class Ng2ViewComponentHtmlGenerator {
 	}
 
 	def CharSequence createNg2ViewComponentHtml(View view) '''
-		<!-- Component (View): Â«view.nameÂ» -->
-		Â«IF view.exposed_filter.size > 0Â»
+		<!-- Component (View): «view.name» -->
+		«IF view.exposed_filter.size > 0»
 			<div class="row"> <!-- row -->
 				<div class="col-md-12"> <!-- col-md-12 -->				
 					<div class="panel panel-default"> <!-- panel -->
@@ -35,14 +35,14 @@ class Ng2ViewComponentHtmlGenerator {
 							<form class="form-horizontal">
 								<div class="row"> <!-- row -->
 									<div class="col-md-12"> <!-- col-md-12 -->
-										Â«FOR f : view.exposed_filterÂ»
+										«FOR f : view.exposed_filter»
 											<div class="form-group">
-												<label for="Â«f.nameÂ»" class="col-md-2 control-label">Â«f.labelÂ»</label>
+												<label for="«f.name»" class="col-md-2 control-label">«f.label»</label>
 												<div class="col-md-10">
-													<input type="text" id="Â«f.nameÂ»" class="form-control">				
+													<input type="text" id="«f.name»" class="form-control">				
 												</div>
 											</div>
-										Â«ENDFORÂ»
+										«ENDFOR»
 									</div> <!-- col-md-12 -->
 								</div> <!-- row -->
 								<div class="row pull-right"> <!-- row -->
@@ -56,7 +56,7 @@ class Ng2ViewComponentHtmlGenerator {
 					</div> <!-- panel -->
 				</div> <!-- col-md-12 -->
 			</div> <!-- row -->
-		Â«ENDIFÂ»
+		«ENDIF»
 		<div class="row"> <!-- row -->
 			<div class="col-md-12"> <!-- col-md-12 -->
 				<div class="panel panel-default panel-table"> <!-- panel -->
@@ -65,43 +65,46 @@ class Ng2ViewComponentHtmlGenerator {
 							<div class="col-md-6">
 								<h3 class="panel-title">Search Results</h3>
 							</div>
-							Â«IF view.add_link != nullÂ»
+							«IF view.add_link != null»
 								<div class="col-md-6 text-right">
-									<a [routerLink]="['AddÂ«view.base_entity.name.toFirstUpperÂ»']" class="btn btn-primary btn-create">Create New</a>
+									<a	[routerLink]="['Add«view.base_entity.name.toFirstUpper»']"
+										class="btn btn-primary btn-create">
+											Create New
+									</a>
 								</div>
-							Â«ENDIFÂ»
+							«ENDIF»
 						</div>
 					</div> <!-- panel-heading -->
 					<div class="panel-body"> <!-- panel-body -->
-						<table class="table table-bordered" *ngIf='Â«view.name.toFirstLowerÂ» && Â«view.name.toFirstLowerÂ».length'> <!-- table -->
+						<table class="table table-bordered" *ngIf='«view.name.toFirstLower» && «view.name.toFirstLower».length'> <!-- table -->
 							<thead>
 								<tr>
-									Â«FOR f : view.fieldsÂ»
-										<th>Â«f.labelÂ»</th>
-									Â«ENDFORÂ»
-									Â«IF view.show_link != null || view.edit_link != null || view.delete_link != nullÂ»
+									«FOR f : view.fields»
+										<th>«f.label»</th>
+									«ENDFOR»
+									«IF view.show_link != null || view.edit_link != null || view.delete_link != null»
 										<th>Actions</th>
-									Â«ENDIFÂ»
+									«ENDIF»
 								</tr>
 							</thead>
 							<tbody>
-								<tr *ngFor="let item of Â«view.name.toFirstLowerÂ»">
-									Â«FOR f : view.fieldsÂ»
-										<td>{{item.Â«f.name.toFirstLowerÂ»}}</td>
-									Â«ENDFORÂ»
-									Â«IF view.show_link != null || view.edit_link != null || view.delete_link  != nullÂ»
+								<tr *ngFor="let item of «view.name.toFirstLower»">
+									«FOR f : view.fields»
+										<td>{{item.«f.name.toFirstLower»}}</td>
+									«ENDFOR»
+									«IF view.show_link != null || view.edit_link != null || view.delete_link  != null»
 										<td>
-											Â«IF view.show_link != nullÂ»
+											«IF view.show_link != null»
 												<button type="submit" class="btn btn-sm btn-default">Show</button>
-											Â«ENDIFÂ»
-											Â«IF view.edit_link != nullÂ»
-												<a [routerLink]="['EditÂ«view.base_entity.name.toFirstUpperÂ»', {id: item.id}]" class="btn btn-sm btn-success">Edit</a>
-											Â«ENDIFÂ»
-											Â«IF view.delete_link != nullÂ»
+											«ENDIF»
+											«IF view.edit_link != null»
+												<a [routerLink]="['Edit«view.base_entity.name.toFirstUpper»', {id: item.«view.base_entity.entity_db_table.id_db_table»}]" class="btn btn-sm btn-success">Edit</a>
+											«ENDIF»
+											«IF view.delete_link != null»
 												<button type="submit" class="btn btn-sm btn-danger">Delete</button>
-											Â«ENDIFÂ»
+											«ENDIF»
 										</td>
-									Â«ENDIFÂ»
+									«ENDIF»
 								</tr>
 							</tbody>
 						</table> <!-- table -->

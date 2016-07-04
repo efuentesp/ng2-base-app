@@ -14,58 +14,58 @@ import com.codebuilder.codeBuilder.EntityCheckboxField
 import com.codebuilder.codeBuilder.EntityReferenceField
 import com.codebuilder.codeBuilder.EntityFieldPanelGroup
 
-class Ng2EntityInterfaseTsGenerator {
+class Ng2EntityInterfaceTsGenerator {
 	
 	def doGenerator(Resource resource, IFileSystemAccess2 fsa) {
  		for (model : (resource.contents.filter(typeof(Model)))) {
 			for (entity : model.entities) {			
 				fsa.generateFile(
-					"app/" + entity.name.toFirstLower + "/" + entity.name.toFirstLower + ".ts",
-					entity.createNg2EntityInterfaseTs
+					"app/" + entity.name.toFirstLower + "/" + entity.name.toFirstLower + ".interface.ts",
+					entity.createNg2EntityInterfaceTs
 				)
 			}
 		}
 	}
 
-	def CharSequence createNg2EntityInterfaseTs(Entity entity) '''
-		export interface IÂ«entity.name.toFirstUpperÂ» {
-			Â«FOR entity_field : entity.entity_fieldsÂ»
-				Â«entity_field.createInterfaceFieldÂ»
-			Â«ENDFORÂ»
+	def CharSequence createNg2EntityInterfaceTs(Entity entity) '''
+		export interface I«entity.name.toFirstUpper» {
+			«FOR entity_field : entity.entity_fields»
+				«entity_field.createInterfaceField»
+			«ENDFOR»
 		}	
 	'''
 	
 	def dispatch CharSequence createInterfaceField(EntityTextField f) '''
-		Â«f.nameÂ»: string;
+		«f.name»: string;
 	'''
 
 	def dispatch CharSequence createInterfaceField(EntityLongTextField f) '''
-		Â«f.nameÂ»: string;
+		«f.name»: string;
 	'''
 
 	def dispatch CharSequence createInterfaceField(EntityIntegerField f) '''
-		Â«f.nameÂ»: number;
+		«f.name»: number;
 	'''
 
 	def dispatch CharSequence createInterfaceField(EntityListField f) '''
-		Â«f.nameÂ»: string;
+		«f.name»: string;
 	'''
 
 	def dispatch CharSequence createInterfaceField(EntityOptionField f) '''
-		Â«f.nameÂ»: string;
+		«f.name»: string;
 	'''
 
 	def dispatch CharSequence createInterfaceField(EntityCheckboxField f) '''
-		Â«f.nameÂ»: string;
+		«f.name»: string;
 	'''
 
 	def dispatch CharSequence createInterfaceField(EntityReferenceField f) '''
 	'''
 
 	def dispatch CharSequence createInterfaceField(EntityFieldPanelGroup g) '''
-		Â«FOR entity_field : g.entity_fieldsÂ»
-			Â«entity_field.createInterfaceFieldÂ»
-		Â«ENDFORÂ»	
+		«FOR entity_field : g.entity_fields»
+			«entity_field.createInterfaceField»
+		«ENDFOR»	
 	'''
 
 
