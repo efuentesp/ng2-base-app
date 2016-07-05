@@ -1,0 +1,8 @@
+<div *ngIf="nombre.dirty && !nombre.valid && !nombre.pending">
+    <div *ngIf="nombre.errors.required" class="alert alert-danger" role="alert">
+        <span class="sr-only">Error:</span>
+        'Required field.'
+    </div>
+</div>
+
+https://coryrylan.com/blog/angular-2-form-builder-and-validation-management
