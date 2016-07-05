@@ -1,4 +1,4 @@
-<!-- Component (View): Fideicomisos -->
+<!-- Component (View): Subfisos -->
 <div class="row"> <!-- row -->
 	<div class="col-md-12"> <!-- col-md-12 -->				
 		<div class="panel panel-default"> <!-- panel -->
@@ -41,7 +41,7 @@
 						<h3 class="panel-title">Search Results</h3>
 					</div>
 					<div class="col-md-6 text-right">
-						<a	[routerLink]="['AddFideicomiso']"
+						<a	[routerLink]="['AddSubfiso']"
 							class="btn btn-primary btn-create">
 								Create New
 						</a>
@@ -49,23 +49,23 @@
 				</div>
 			</div> <!-- panel-heading -->
 			<div class="panel-body"> <!-- panel-body -->
-				<table class="table table-bordered" *ngIf='fideicomisos && fideicomisos.length'> <!-- table -->
+				<table class="table table-bordered" *ngIf='subfisos && subfisos.length'> <!-- table -->
 					<thead>
 						<tr>
+							<th>Fideicomiso</th>
 							<th>Número</th>
 							<th>Nombre</th>
-							<th>Tipo de Persona</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let item of fideicomisos">
+						<tr *ngFor="let item of subfisos">
+							<td>{{item.fideicomiso}}</td>
 							<td>{{item.numero}}</td>
 							<td>{{item.nombre}}</td>
-							<td>{{item.tipo_persona}}</td>
 							<td>
 								<button type="submit" class="btn btn-sm btn-default">Show</button>
-								<a [routerLink]="['EditFideicomiso', {id: item.Id}]" class="btn btn-sm btn-success">Edit</a>
+								<a [routerLink]="['EditSubfiso', {id: item.Id}]" class="btn btn-sm btn-success">Edit</a>
 								<button type="submit" class="btn btn-sm btn-danger">Delete</button>
 							</td>
 						</tr>

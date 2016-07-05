@@ -3,7 +3,7 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteParams }
 import { Control, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES } from '@angular/common';
 
 import { IFideicomiso } from './fideicomiso.interface';
-import { IFideicomiso } from './fideicomiso.class';
+import { Fideicomiso } from './fideicomiso.class';
 import { FideicomisoService } from './fideicomiso.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class EditFideicomisoComponent implements OnInit {
 	tipo_cliente: Control;
 	tipo_gobierno: Control;
 
-	private id;
+	private _id;
 	public errorMessage: string;			
 	public fideicomiso;
 
@@ -31,18 +31,25 @@ export class EditFideicomisoComponent implements OnInit {
 				private params: RouteParams,
 				private _fideicomisoService: FideicomisoService) {
 		
-		this.id = params.get('id');
+		this._id = params.get('id');
 	}
 	
-	doOnSubmit(event) {
+	doOnSubmit(event) : void {
+		this._fideicomisoService.updateItem(this.form.value)
+			.subscribe(
+				data => console.log(data),
+				error => console.log(error)
+			);
+		//this._router.navigateByUrl('/fideicomiso');
+		event.preventDefault();
 	}
-	
+
 	ngOnInit() : void {
-		this._fideicomisoService.getFideicomiso(this.id)
+		this._fideicomisoService.getFideicomiso(this._id)
 			.subscribe(
 				data => {
 					this.fideicomiso = <IFideicomiso>data;
-					this.id.updateValue(this.fideicomiso.id);
+					this.Id.updateValue(this.fideicomiso.Id);
 					this.numero.updateValue(this.fideicomiso.numero);
 					this.nombre.updateValue(this.fideicomiso.nombre);
 					this.patrimonio.updateValue(this.fideicomiso.patrimonio);
@@ -50,9 +57,10 @@ export class EditFideicomisoComponent implements OnInit {
 					this.tipo_cliente.updateValue(this.fideicomiso.tipo_cliente);
 					this.tipo_gobierno.updateValue(this.fideicomiso.tipo_gobierno);
 				},
-				error => this.errorMessage = <any>error,
-				() => console.log(this.this.fideicomiso));
-				
+				error => this.errorMessage = <any>error
+				//() => console.log(this.fideicomiso)
+			);
+					
 		this.Id = new Control(
 			'',
 			Validators.compose([
@@ -91,7 +99,7 @@ export class EditFideicomisoComponent implements OnInit {
 			])
 		);
 		
-		this.form = builder.group({
+		this.form = this.builder.group({
 			Id: this.Id,
 			numero: this.numero,
 			nombre: this.nombre,

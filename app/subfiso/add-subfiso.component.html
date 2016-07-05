@@ -13,10 +13,33 @@
 							<input	type="number"
 									id="Id"
 									class="form-control"
-									ngControl="Id">
+									ngControl="Id"
+									#Id="ngForm">
 						</div> <!-- col-md-10 -->
 					</div> <!-- form-group -->
-					<p>EntityReferenceField</p>
+					<!-- Form Field: fideicomiso -->
+					<div class="form-group"> <!-- form-group -->
+						<label for="fideicomiso" class="col-md-2 control-label">Fideicomiso</label>
+						<div class="col-md-10"> <!-- col-md-10 -->
+							<div class=""input-group"> <!-- input-group -->
+								<input	type="text"
+										id="fideicomiso"
+										class="form-control"
+										placeholder="Fideicomiso"
+										ngControl="fideicomiso"
+										#fideicomiso="ngForm">
+								<span class="input-group-btn">
+									<button class="btn btn-info">...</button>
+								</span>
+							</div> <!-- input-group -->
+							<div *ngIf="fideicomiso.dirty && !fideicomiso.valid && !fideicomiso.pending">
+								<div *ngIf="fideicomiso.errors.required" class="alert alert-danger" role="alert">
+									<span class="sr-only">Error:</span>
+									'Required field.'
+								</div>
+							</div>
+						</div> <!-- col-md-10 -->
+					</div> <!-- form-group -->
 					<!-- Form Field: numero -->
 					<div class="form-group"> <!-- form-group -->
 						<label for="numero" class="col-md-2 control-label">Número</label>
@@ -24,7 +47,8 @@
 							<input	type="number"
 									id="numero"
 									class="form-control"
-									ngControl="numero">
+									ngControl="numero"
+									#numero="ngForm">
 						</div> <!-- col-md-10 -->
 					</div> <!-- form-group -->
 					<!-- Form Field: nombre -->

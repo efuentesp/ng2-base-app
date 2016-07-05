@@ -3,7 +3,7 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteParams }
 import { Control, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES } from '@angular/common';
 
 import { ISubfiso } from './subfiso.interface';
-import { ISubfiso } from './subfiso.class';
+import { Subfiso } from './subfiso.class';
 import { SubfisoService } from './subfiso.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class EditSubfisoComponent implements OnInit {
 	numero: Control;
 	nombre: Control;
 
-	private id;
+	private _id;
 	public errorMessage: string;			
 	public subfiso;
 
@@ -27,24 +27,32 @@ export class EditSubfisoComponent implements OnInit {
 				private params: RouteParams,
 				private _subfisoService: SubfisoService) {
 		
-		this.id = params.get('id');
+		this._id = params.get('id');
 	}
 	
-	doOnSubmit(event) {
+	doOnSubmit(event) : void {
+		this._subfisoService.updateItem(this.form.value)
+			.subscribe(
+				data => console.log(data),
+				error => console.log(error)
+			);
+		//this._router.navigateByUrl('/subfiso');
+		event.preventDefault();
 	}
-	
+
 	ngOnInit() : void {
-		this._subfisoService.getSubfiso(this.id)
+		this._subfisoService.getSubfiso(this._id)
 			.subscribe(
 				data => {
 					this.subfiso = <ISubfiso>data;
-					this.id.updateValue(this.subfiso.id);
+					this.Id.updateValue(this.subfiso.Id);
 					this.numero.updateValue(this.subfiso.numero);
 					this.nombre.updateValue(this.subfiso.nombre);
 				},
-				error => this.errorMessage = <any>error,
-				() => console.log(this.this.subfiso));
-				
+				error => this.errorMessage = <any>error
+				//() => console.log(this.subfiso)
+			);
+					
 		this.Id = new Control(
 			'',
 			Validators.compose([
@@ -63,7 +71,7 @@ export class EditSubfisoComponent implements OnInit {
 			])
 		);
 		
-		this.form = builder.group({
+		this.form = this.builder.group({
 			Id: this.Id,
 			numero: this.numero,
 			nombre: this.nombre,

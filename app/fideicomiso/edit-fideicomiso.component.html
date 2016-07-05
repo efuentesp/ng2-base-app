@@ -13,7 +13,8 @@
 							<input	type="number"
 									id="Id"
 									class="form-control"
-									ngControl="Id">
+									ngControl="Id"
+									#Id="ngForm">
 						</div> <!-- col-md-10 -->
 					</div> <!-- form-group -->
 					<!-- Panel Group: panel_01 -->
@@ -29,7 +30,8 @@
 									<input	type="number"
 											id="numero"
 											class="form-control"
-											ngControl="numero">
+											ngControl="numero"
+											#numero="ngForm">
 								</div> <!-- col-md-10 -->
 							</div> <!-- form-group -->
 							<!-- Form Field: nombre -->
@@ -65,8 +67,8 @@
 									<textarea	id="patrimonio"
 												class="form-control"
 												rows="3"
-												ngControl="patrimonio">
-													Default value
+												ngControl="patrimonio"
+												#patrimonio="ngForm">
 									</textarea>
 									<p class="help-block">This is a help text..</p>
 								</div> <!-- col-md-10 -->
@@ -84,6 +86,7 @@
 								<label for="tipo_persona" class="col-md-2 control-label">Tipo de Persona</label>
 								<div class="col-md-10"> <!-- col-md-10 -->
 									<select class="form-control" id="tipo_persona">
+										<option value="">-- Select one --</option>
 										<option value="FISICA">Física</option>
 										<option value="MORAL">Moral</option>
 									</select>

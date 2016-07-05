@@ -3,7 +3,7 @@ import { Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteParams }
 import { Control, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES } from '@angular/common';
 
 import { IFideicomiso } from './fideicomiso.interface';
-import { IFideicomiso } from './fideicomiso.class';
+import { Fideicomiso } from './fideicomiso.class';
 import { FideicomisoService } from './fideicomiso.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class AddFideicomisoComponent implements OnInit {
 	tipo_cliente: Control;
 	tipo_gobierno: Control;
 
-	private id;
+	private _id;
 	public errorMessage: string;			
 	public fideicomiso;
 
@@ -31,13 +31,67 @@ export class AddFideicomisoComponent implements OnInit {
 				private params: RouteParams,
 				private _fideicomisoService: FideicomisoService) {
 		
-		this.id = params.get('id');
+		this._id = params.get('id');
 	}
 	
-	doOnSubmit(event) {
-		this._fideicomisoService.addFideicomiso(this.form.value);
+	doOnSubmit(event) : void {
+		this._fideicomisoService.addItem(this.form.value)
+			.subscribe(
+				data => console.log(data),
+				error => console.log(error)
+			);					
 		//this._router.navigateByUrl('/fideicomiso');
 		event.preventDefault();
 	}
-	
+
+	ngOnInit() : void {
+					
+		this.Id = new Control(
+			'',
+			Validators.compose([
+			])
+		);
+		this.numero = new Control(
+			'',
+			Validators.compose([
+				Validators.required,
+			])
+		);
+		this.nombre = new Control(
+			'',
+			Validators.compose([
+				Validators.required,
+			])
+		);
+		this.patrimonio = new Control(
+			'',
+			Validators.compose([
+			])
+		);
+		this.tipo_persona = new Control(
+			'',
+			Validators.compose([
+			])
+		);
+		this.tipo_cliente = new Control(
+			'',
+			Validators.compose([
+			])
+		);
+		this.tipo_gobierno = new Control(
+			'',
+			Validators.compose([
+			])
+		);
+		
+		this.form = this.builder.group({
+			Id: this.Id,
+			numero: this.numero,
+			nombre: this.nombre,
+			patrimonio: this.patrimonio,
+			tipo_persona: this.tipo_persona,
+			tipo_cliente: this.tipo_cliente,
+			tipo_gobierno: this.tipo_gobierno,
+		});
+	}
 }

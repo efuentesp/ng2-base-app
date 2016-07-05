@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { IFideicomiso } from './fideicomiso.interface';
@@ -9,6 +9,8 @@ export class FideicomisoService {
 	
 	private _fideicomisoUrl;
 	
+	response: IFideicomiso;
+	
 	constructor(private _http: Http) {
 		this._fideicomisoUrl = 'http://localhost:3001/fideicomiso';
 	}
@@ -16,23 +18,45 @@ export class FideicomisoService {
 	getAllFideicomiso() : Observable<IFideicomiso[]> {
 		return this._http.get(this._fideicomisoUrl)
 			.map((response: Response) => <IFideicomiso[]>response.json())
-			.do(data => console.log('All: ' + JSON.stringify(data)))
+			//.do(data => console.log('All: ' + JSON.stringify(data)))
 			.catch(this.handleError);
 	}
 
 	getFideicomiso(id: number): Observable<IFideicomiso> {
 		return this._http.get(this._fideicomisoUrl + '/' + id)
 			.map((response: Response) => <IFideicomiso>response.json())
-			.do(data => console.log('All: ' + JSON.stringify(data)))
-			.catch(this.handleError);
-							
-		//return this.getAllFideicomiso()
-		//	.map((fideicomisoList: IFideicomiso[]) => fideicomisoList.find(i => i.id === id));
+			//.do(data => console.log('All: ' + JSON.stringify(data)))
+			.catch(this.handleError);									
 	}
 
-	addFideicomiso(model): void {
-		return;
+	addItem(item) : Observable<IFideicomiso[]> {
+		let body = JSON.stringify(item);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+		
+		console.log("http put: " + body);
+		
+		return this._http.post(this._fideicomisoUrl, body, options)
+			.map(this.extractData)
+			.catch(this.handleError);
 	}
+
+	updateItem(item) : Observable<IFideicomiso[]> {
+		let body = JSON.stringify(item);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+		
+		console.log("http put: " + body);
+		
+		return this._http.put(this._fideicomisoUrl + '/' + item.Id, body, options)
+			.map(this.extractData)
+			.catch(this.handleError);
+	}
+
+private extractData(res: Response) {
+	let body = res.json();
+	return body.data || {};
+}
 
 	private handleError(error: Response) {
 		console.error(error);
