@@ -1,5 +1,15 @@
-**/*.js
-**/*.js.map
+main.js
+main.js.map
+
+*.component.js
+*.service.js
+*.class.js
+*.interface.js
+
+*.component.js.map
+*.service.js.map
+*.class.js.map
+*.interface.js.map
 
 # Logs
 logs
