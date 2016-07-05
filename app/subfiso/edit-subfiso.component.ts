@@ -15,6 +15,7 @@ export class EditSubfisoComponent implements OnInit {
 	form: ControlGroup;
 	
 	Id: Control;
+	fideicomiso: Control;
 	numero: Control;
 	nombre: Control;
 
@@ -46,6 +47,7 @@ export class EditSubfisoComponent implements OnInit {
 				data => {
 					this.subfiso = <ISubfiso>data;
 					this.Id.updateValue(this.subfiso.Id);
+					this.fideicomiso.updateValue(this.subfiso.fideicomiso);
 					this.numero.updateValue(this.subfiso.numero);
 					this.nombre.updateValue(this.subfiso.nombre);
 				},
@@ -58,6 +60,12 @@ export class EditSubfisoComponent implements OnInit {
 			Validators.compose([
 			])
 		);
+		this.fideicomiso = new Control(
+			'',
+			Validators.compose([
+				Validators.required,
+			])
+		);	
 		this.numero = new Control(
 			'',
 			Validators.compose([
@@ -73,6 +81,7 @@ export class EditSubfisoComponent implements OnInit {
 		
 		this.form = this.builder.group({
 			Id: this.Id,
+			fideicomiso: this.fideicomiso,
 			numero: this.numero,
 			nombre: this.nombre,
 		});

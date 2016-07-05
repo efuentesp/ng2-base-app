@@ -15,6 +15,7 @@ export class AddSubfisoComponent implements OnInit {
 	form: ControlGroup;
 	
 	Id: Control;
+	fideicomiso: Control;
 	numero: Control;
 	nombre: Control;
 
@@ -47,6 +48,12 @@ export class AddSubfisoComponent implements OnInit {
 			Validators.compose([
 			])
 		);
+		this.fideicomiso = new Control(
+			'',
+			Validators.compose([
+				Validators.required,
+			])
+		);	
 		this.numero = new Control(
 			'',
 			Validators.compose([
@@ -62,6 +69,7 @@ export class AddSubfisoComponent implements OnInit {
 		
 		this.form = this.builder.group({
 			Id: this.Id,
+			fideicomiso: this.fideicomiso,
 			numero: this.numero,
 			nombre: this.nombre,
 		});
