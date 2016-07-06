@@ -30,7 +30,8 @@
 									<div class="form-group"> <!-- form-group -->
 										<label for="fideicomiso" class="col-md-2 control-label">Fideicomiso</label>
 										<div class="col-md-10"> <!-- col-md-10 -->
-											<div class="input-group"> <!-- input-group -->
+								<!--
+											<div class="input-group">
 												<input	type="text"
 														id="fideicomiso"
 														class="form-control"
@@ -40,7 +41,9 @@
 												<span class="input-group-btn">
 													<button class="btn btn-info">...</button>
 												</span>
-											</div> <!-- input-group -->
+											</div>
+								-->
+											<SearchFideicomisos></SearchFideicomisos>
 											<div *ngIf="fideicomiso.dirty && !fideicomiso.valid && !fideicomiso.pending">
 												<div *ngIf="fideicomiso.errors.required" class="alert alert-danger" role="alert">
 													<span class="sr-only">Error:</span>

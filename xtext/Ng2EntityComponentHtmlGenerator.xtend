@@ -62,8 +62,8 @@ class Ng2EntityComponentHtmlGenerator {
 		</div> <!-- row -->
 	'''
 
-	def dispatch CharSequence createHtmlFormField(EntityTextField f) 
-		'''
+	def dispatch CharSequence createHtmlFormField(EntityTextField f) '''
+		
 		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
 			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
@@ -95,8 +95,8 @@ class Ng2EntityComponentHtmlGenerator {
 		</div> <!-- form-group -->
 		'''
 
-	def dispatch CharSequence createHtmlFormField(EntityLongTextField f) 
-		'''
+	def dispatch CharSequence createHtmlFormField(EntityLongTextField f) '''
+		
 		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
 			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
@@ -114,8 +114,8 @@ class Ng2EntityComponentHtmlGenerator {
 		</div> <!-- form-group -->
 		'''
 
-	def dispatch CharSequence createHtmlFormField(EntityIntegerField f) 
-		'''
+	def dispatch CharSequence createHtmlFormField(EntityIntegerField f) '''
+		
 		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
 			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
@@ -132,8 +132,8 @@ class Ng2EntityComponentHtmlGenerator {
 		</div> <!-- form-group -->
 		'''
 
-	def dispatch CharSequence createHtmlFormField(EntityListField f) 
-		'''
+	def dispatch CharSequence createHtmlFormField(EntityListField f) '''
+		
 		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
 			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
@@ -151,8 +151,8 @@ class Ng2EntityComponentHtmlGenerator {
 		</div> <!-- form-group -->
 		'''
 
-	def dispatch CharSequence createHtmlFormField(EntityOptionField f) 
-		'''
+	def dispatch CharSequence createHtmlFormField(EntityOptionField f) '''
+		
 		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
 			<label for="«f.name.toFirstLower»" class="col-md-2 control-label">«f.label.value»</label>
@@ -172,8 +172,8 @@ class Ng2EntityComponentHtmlGenerator {
 		</div> <!-- form-group -->
 		'''
 
-	def dispatch CharSequence createHtmlFormField(EntityCheckboxField f) 
-		'''
+	def dispatch CharSequence createHtmlFormField(EntityCheckboxField f) '''
+		
 		<!-- Form Field: «f.name» -->
 		<div class="form-group"> <!-- form-group -->
 			<label for="«f.name.toFirstLower»" class="col-md-2 control-label">«f.label.value»</label>
@@ -193,11 +193,43 @@ class Ng2EntityComponentHtmlGenerator {
 		</div> <!-- form-group -->
 		'''
 	
-	def dispatch CharSequence createHtmlFormField(EntityReferenceField entity_field) '''
-		<p>EntityReferenceField</p>
+	def dispatch CharSequence createHtmlFormField(EntityReferenceField f) '''
+	
+		<!-- Form Field: «f.name» -->
+		<div class="form-group"> <!-- form-group -->
+			<label for="«f.name»" class="col-md-2 control-label">«f.label.value»</label>
+			<div class="col-md-10"> <!-- col-md-10 -->
+<!--
+				<div class="input-group">
+					<input	type="text"
+							id="«f.name»"
+							class="form-control"
+							placeholder="«f.label.value»"
+							ngControl="«f.name»"
+							#«f.name»="ngForm">
+					<span class="input-group-btn">
+						<button class="btn btn-info">...</button>
+					</span>
+				</div>
+-->
+				<«f.widget.entity_select.name»></«f.widget.entity_select.name»>
+				<div *ngIf="«f.name».dirty && !«f.name».valid && !«f.name».pending">
+					«IF f.required != null»
+						<div *ngIf="«f.name».errors.required" class="alert alert-danger" role="alert">
+							<span class="sr-only">Error:</span>
+							'Required field.'
+						</div>
+					«ENDIF»
+				</div>
+				«IF f.help_text != null»
+					<p class="help-block">«f.help_text.value»</p>
+				«ENDIF»					
+			</div> <!-- col-md-10 -->
+		</div> <!-- form-group -->
 		'''
 
 	def dispatch CharSequence createHtmlFormField(EntityFieldPanelGroup g) '''
+	
 		<!-- Panel Group: «g.name» -->
 		<div class="panel panel-default"> <!-- panel -->
 			<div class="panel-heading"> <!-- panel-heading -->

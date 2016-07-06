@@ -5,6 +5,7 @@ generate codeBuilder "http://www.codebuilder.com/CodeBuilder"
 Model:
 	(entities += Entity)*
 	(views += View)*
+	(entity_select += EntitySelect)*
 ;
 
 Entity:
@@ -126,15 +127,12 @@ EntityFieldPanelGroup:
 
 EntityReferenceField:
 	field_reference=[Entity] name=ID '{'
-		(field_attributes += FieldAttribute)*
+		(label=FieldLabel)
+		(widget=FieldWidget)
+		(help_text=FieldHelpText)?
+		(db_field=FieldDbField)?
+		(required=FieldRequired)?
 	'}'
-;
-
-FieldAttribute:
-	FieldLabel |
-	FieldDbField |
-	FieldRequired |
-	FieldCardinality
 ;
 
 FieldDefaultValueString:
@@ -147,6 +145,10 @@ FieldDefaultValueInteger:
 
 FieldLabel:
 	'label' value=STRING
+;
+
+FieldWidget:
+	'widget' entity_select=[EntitySelect]
 ;
 
 FieldMinValue:
@@ -214,6 +216,21 @@ View:
 	'}'
 ;
 
+EntitySelect:
+	'entity_select' name=ID '{'
+		'base_entity' base_entity=[Entity]
+		'selected_field' selected_field=ID
+		'fields' '{'
+			(fields += ViewField)+
+			(single_select = 'single' | multiple_select = 'multiple')?			
+		'}'
+		('exposed_filter_criterias' '{'
+			(exposed_filter += ViewExposedFilter)+
+		'}')?
+		(pager = ViewPager)?
+	'}'
+;
+
 ViewField:
 	(entity=[Entity] '.')? name=ID '{'
 		'label' label=STRING
@@ -231,9 +248,4 @@ ViewPager:
 	'pager' '{'
 		'items_per_page' items=INT
 	'}'
-;
-
-YesNo:
-	'yes' |
-	'no'
 ;

@@ -25,7 +25,10 @@ class CodeBuilderGenerator extends AbstractGenerator {
 	
 	@Inject Ng2ViewComponentTsGenerator ng2ViewComponentTsGenerator
 	@Inject Ng2ViewComponentHtmlGenerator ng2ViewComponentHtmlGenerator
-	
+
+	@Inject Ng2EntitySelectComponentTsGenerator ng2EntitySelectComponentTsGenerator
+	@Inject Ng2EntitySelectComponentHtmlGenerator ng2EntitySelectComponentHtmlGenerator
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		ng2EntityComponentTsGenerator.doGenerator(resource, fsa)
 		ng2EntityComponentHtmlGenerator.doGenerator(resource, fsa)
@@ -36,5 +39,8 @@ class CodeBuilderGenerator extends AbstractGenerator {
 		
 		ng2ViewComponentTsGenerator.doGenerator(resource, fsa)
 		ng2ViewComponentHtmlGenerator.doGenerator(resource, fsa)
+		
+		ng2EntitySelectComponentTsGenerator.doGenerator(resource, fsa)
+		ng2EntitySelectComponentHtmlGenerator.doGenerator(resource, fsa)		
 	}
 }

@@ -16,6 +16,7 @@ import { EditSubfisoComponent } from './subfiso/edit-subfiso.component';
 import { SubfisoService } from './subfiso/subfiso.service';
 
 import { FideicomisosComponent } from './fideicomisos/fideicomisos.component';
+import { SearchFideicomisosComponent } from './searchFideicomisos/searchFideicomisos.component';
 import { SubfisosComponent } from './subfisos/subfisos.component';
 
 @Component({
@@ -31,6 +32,7 @@ import { SubfisosComponent } from './subfisos/subfisos.component';
 	{ path: '/fideicomiso/add', name: 'AddFideicomiso', component: AddFideicomisoComponent },
 	{ path: '/fideicomiso/edit', name: 'EditFideicomiso', component: EditFideicomisoComponent },
 	{ path: '/fideicomisos', name: 'Fideicomisos', component: FideicomisosComponent },
+	{ path: '/searchFideicomisos', name: 'SearchFideicomisos', component: SearchFideicomisosComponent },
 	
 	{ path: '/subfiso/add', name: 'AddSubfiso', component: AddSubfisoComponent },
 	{ path: '/subfiso/edit', name: 'EditSubfiso', component: EditSubfisoComponent },

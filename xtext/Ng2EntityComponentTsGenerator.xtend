@@ -64,12 +64,20 @@ class Ng2EntityComponentTsGenerator {
 				this._id = params.get('id');
 			}
 			
-			doOnSubmit(event) {
+			doOnSubmit(event) : void {
 				«IF action=='add'»
-					this._«entity.name.toFirstLower»Service.addItem(this.form.value);
+					this._«entity.name.toFirstLower»Service.addItem(this.form.value)
+						.subscribe(
+							data => console.log(data),
+							error => console.log(error)
+						);					
 				«ENDIF»
 				«IF action=='edit'»
-					this._«entity.name.toFirstLower»Service.updateItem(this.form.value);
+					this._«entity.name.toFirstLower»Service.updateItem(this.form.value)
+						.subscribe(
+							data => console.log(data),
+							error => console.log(error)
+						);
 				«ENDIF»
 				//this._router.navigateByUrl('/«entity.name.toFirstLower»');
 				event.preventDefault();
@@ -85,7 +93,7 @@ class Ng2EntityComponentTsGenerator {
 									«f.createNg2ComponentControlItemUpdate(entity)»
 								«ENDFOR»								
 							},
-							error => this.errorMessage = <any>error,
+							error => this.errorMessage = <any>error
 							//() => console.log(this.«entity.name.toFirstLower»)
 						);
 				«ENDIF»
@@ -128,6 +136,7 @@ class Ng2EntityComponentTsGenerator {
 	'''
 	
 	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityReferenceField f, Entity e) '''
+		this.«f.name».updateValue(this.«e.name.toFirstLower».«f.name»);
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlItemUpdate(EntityFieldPanelGroup g, Entity e) '''
@@ -163,6 +172,7 @@ class Ng2EntityComponentTsGenerator {
 	'''	
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityReferenceField f) '''
+		«f.name»: Control;
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlDefinition(EntityFieldPanelGroup g) '''
@@ -229,6 +239,12 @@ class Ng2EntityComponentTsGenerator {
 	'''	
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityReferenceField f) '''
+		this.«f.name» = new Control(
+			'',
+			Validators.compose([
+				«f.requiredValidator»
+			])
+		);	
 	'''
 
 	def dispatch CharSequence createNg2ComponentControlItem(EntityFieldPanelGroup g) '''
@@ -262,6 +278,7 @@ class Ng2EntityComponentTsGenerator {
 		«f.name»: this.«f.name»,
 	'''
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityReferenceField f) '''
+		«f.name»: this.«f.name»,
 	'''
 	
 	def dispatch CharSequence createNg2ComponentControlGroupItem(EntityFieldPanelGroup g) '''
@@ -339,6 +356,9 @@ class Ng2EntityComponentTsGenerator {
 	'''
 	
 	def dispatch CharSequence requiredValidator(EntityReferenceField f) '''
+		«IF f.required != null»
+			Validators.required,
+		«ENDIF»		
 	'''
 	
 	def dispatch CharSequence requiredValidator(EntityFieldPanelGroup g) '''
@@ -346,6 +366,4 @@ class Ng2EntityComponentTsGenerator {
 			«f.requiredValidator»
 		«ENDFOR»	
 	'''
-
-	
 }

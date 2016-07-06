@@ -84,26 +84,31 @@ entity Subfiso {
 			db_field "ID"
 		}
 		
-        Fideicomiso fideicomiso {
-            label "Fideicomiso"
-            db_field "SCT_NUM_CONTRATO"
-            required
-            cardinality 1
-        }
-        
-        Integer numero {
-            label "Número"
-            db_field "SCT_SUB_CONTRATO"
-            required
-            cardinality 1
-        }
-        
-        Text nombre {
-            label "Nombre"
-            db_field "SCT_NOM_SUB_CTO"
-            required
-            cardinality 1
-        }        
+		Panel panel_01 {
+			label "Panel 1"
+			fields {
+		        Fideicomiso fideicomiso {
+		            label "Fideicomiso"
+		            widget SearchFideicomisos
+		            db_field "SCT_NUM_CONTRATO"
+		            required
+		        }
+		        
+		        Integer numero {
+		            label "Número"
+		            db_field "SCT_SUB_CONTRATO"
+		            required
+		            cardinality 1
+		        }
+		        
+		        Text nombre {
+		            label "Nombre"
+		            db_field "SCT_NOM_SUB_CTO"
+		            required
+		            cardinality 1
+		        }
+		    }
+		 }        
     }
 }
 
@@ -128,5 +133,45 @@ view Fideicomisos {
 		numero {
 			label "Número"
 		}		
+	}
+}
+
+view Subfisos {
+	base_entity Subfiso
+	fields {
+		fideicomiso {
+			label "Fideicomiso"
+		}	
+		numero {
+			label "Número"
+		}
+		nombre {
+			label "Nombre"
+		}
+		add_link
+		show_link
+		edit_link
+		delete_link
+	}
+	exposed_filter_criterias {
+		numero {
+			label "Número"
+		}		
+	}
+}
+
+entity_select SearchFideicomisos {
+	base_entity Fideicomiso
+	selected_field nombre
+	fields {
+		numero {
+			label "Número"
+		}
+		nombre {
+			label "Nombre"
+		}
+		tipo_persona {
+			label "Tipo de Persona"
+		}
 	}
 }

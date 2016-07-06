@@ -20,7 +20,7 @@ class Ng2EntityServiceTsGenerator {
 	
 	def CharSequence createNg2EntityServiceTs(Entity entity) '''
 		import { Injectable } from '@angular/core';
-		import { Http, Response, Headers } from '@angular/http';
+		import { Http, Response, Headers, RequestOptions } from '@angular/http';
 		import { Observable } from 'rxjs/Observable';
 		
 		import { I«entity.name.toFirstUpper» } from './«entity.name.toFirstLower».interface';
@@ -29,11 +29,11 @@ class Ng2EntityServiceTsGenerator {
 		export class «entity.name.toFirstUpper»Service {
 			
 			private _«entity.name.toFirstLower»Url;
-			private _headers = new Headers();
+			
+			response: I«entity.name.toFirstUpper»;
 			
 			constructor(private _http: Http) {
 				this._«entity.name.toFirstLower»Url = 'http://localhost:3001/«entity.name.toFirstLower»';
-				this._headers.append('Content-Type', 'application/json');
 			}
 			
 			getAll«entity.name.toFirstUpper»() : Observable<I«entity.name.toFirstUpper»[]> {
@@ -50,17 +50,34 @@ class Ng2EntityServiceTsGenerator {
 					.catch(this.handleError);									
 			}
 
-			addItem(item): void {
-				return;
+			addItem(item) : Observable<I«entity.name.toFirstUpper»[]> {
+				let body = JSON.stringify(item);
+				let headers = new Headers({ 'Content-Type': 'application/json' });
+				let options = new RequestOptions({ headers: headers });
+				
+				console.log("http put: " + body);
+				
+				return this._http.post(this._«entity.name.toFirstLower»Url, body, options)
+					.map(this.extractData)
+					.catch(this.handleError);
 			}
 
-			updateItem(item): void {
-				console.log(item);
-				this._http.put(this._fideicomisoUrl + '/' + item.id, JSON.stringify(item), { headers: this._headers })
-					.map((res: Response) => res.json()
-					.subscribe((res: IFideicomiso) => this.putResponse = res);
-				return;
+			updateItem(item) : Observable<I«entity.name.toFirstUpper»[]> {
+				let body = JSON.stringify(item);
+				let headers = new Headers({ 'Content-Type': 'application/json' });
+				let options = new RequestOptions({ headers: headers });
+				
+				console.log("http put: " + body);
+				
+				return this._http.put(this._«entity.name.toFirstLower»Url + '/' + item.«entity.entity_db_table.id_db_table», body, options)
+					.map(this.extractData)
+					.catch(this.handleError);
 			}
+
+		private extractData(res: Response) {
+			let body = res.json();
+			return body.data || {};
+		}
 
 			private handleError(error: Response) {
 				console.error(error);
